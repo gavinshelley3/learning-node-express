@@ -148,7 +148,17 @@ cd lesson2
 mkdir front-end
 ```
 
-Download and unzip [front-end.zip](./front-end.zip) in this directory.
+Download and unzip [front-end.zip](./front-end.zip) in this directory. Now go into this directory and run:
+
+```sh
+npm install
+```
+
+This will install all of the dependencies this code needs. You can run this front end with:
+
+```sh
+npm start
+```
 
 You now have a React front end for a ticket service. This could was created using `create-react-app`. Most of the relevant code is in `src/App.js`.
 
