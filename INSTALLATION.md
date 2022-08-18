@@ -23,7 +23,7 @@ web page and copy installation command that uses curl so you can have
 the latest version. For example:
 
 ```
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 ```
 
 Then close your terminal, open a new one, and type:

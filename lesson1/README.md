@@ -3,14 +3,6 @@
 We're going to build a basic Node.js server that uses Express for the
 API.
 
-You can run this code by:
-
-```
-cd lesson1
-npm install
-node server.js
-```
-
 ## Initialize a new node project
 
 The first step with Node.js is to initialize a new project. You do
