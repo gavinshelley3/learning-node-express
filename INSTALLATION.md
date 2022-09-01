@@ -1,6 +1,6 @@
 # Installing Node.js
 
-To use the Vue CLI you need to install Node.js. This is what we'll be using for the back end later.
+Node.js and nvm and npm are already installed on your Cloud9 instance so you dont need to do anything to install them.  If you want to install them on your laptop, you can follow these instructions.
 
 ### For Mac and Linux users
 
