@@ -67,7 +67,8 @@ app.listen(3000, () => console.log('Server listening on port 3000!'));
 ```
 
 When you run `node server.js`, your server will run and listen on port
-3000. You can visit it in a browser at `localhost:3000`.
+3000. You can visit it in a browser at `<YourAWShost>:3000`.  
+You can also test to see if your API is working by opening another terminal and entering ```curl localhost:3000```
 
 
 In this example, we are using `require` to include the Express
