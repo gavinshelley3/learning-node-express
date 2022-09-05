@@ -53,7 +53,7 @@ app.use(express.static('public'));
 ```
 
 This tells Express that it should serve any files in the `public` directory as if they were just
-static files on a web server. We'll put our Vue code here later on.
+static files on a web server. We'll put our React code here later on.
 
 ```js
 let tickets = [];
