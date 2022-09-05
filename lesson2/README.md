@@ -44,9 +44,15 @@ const bodyParser = require("body-parser");
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "POST, GET, DELETE");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 ```
 
-This includes the modules we're using and initializes them.
+This includes the modules we're using and initializes them.  It also tells node to set the Access-Control headers so that you wont get CORS errors.
 
 ```js
 app.use(express.static('public'));
@@ -192,10 +198,11 @@ function App() {
   const [error, setError] = useState("");
   const [name, setName] = useState("");
   const [problem, setProblem] = useState("");
+  var myhostname = "http://YourEC2URL:3000";
 
   const fetchTickets = async() => {
     try {      
-      const response = await axios.get("/api/tickets");
+      const response = await axios.get(myhostname+"/api/tickets");
       setTickets(response.data);
     } catch(error) {
       setError("error retrieving tickets: " + error);
@@ -203,14 +210,16 @@ function App() {
   }
   const createTicket = async() => {
     try {
-      await axios.post("/api/tickets", {name: name, problem: problem});
+      await axios.post(myhostname+"/api/tickets", {name: name, problem: problem});
+      fetchTickets();
     } catch(error) {
       setError("error adding a ticket: " + error);
     }
   }
   const deleteOneTicket = async(ticket) => {
     try {
-    await axios.delete("api/tickets/" + ticket.id);
+      await axios.delete(myhostname+"/api/tickets/" + ticket.id);
+      fetchTickets();
     } catch(error) {
       setError("error deleting a ticket" + error);
     }
@@ -221,16 +230,16 @@ function App() {
     fetchTickets();
   },[]);
 
-  const addTicket = (e) => {
+  const addTicket = async(e) => {
     e.preventDefault();
-    createTicket();
+    await createTicket();
     fetchTickets();
     setName("");
     setProblem("");
   }
 
-  const deleteTicket = (ticket) => {
-    deleteOneTicket(ticket);
+  const deleteTicket = async(ticket) => {
+    await deleteOneTicket(ticket);
     fetchTickets();
   }
 
@@ -271,7 +280,7 @@ function App() {
 export default App;
 
 ```
-You can run this front end with:
+Change the variable "myhostname" to your host URL. You can run this front end with:
 ```sh
 npm start
 ```
@@ -298,7 +307,7 @@ You will see three methods for calling the API. We use this function to GET all 
 ```js
 const fetchTickets = async() => {
     try {      
-      const response = await axios.get("/api/tickets");
+      const response = await axios.get(myhostname+"/api/tickets");
       setTickets(response.data);
     } catch(error) {
       setError("error retrieving tickets: " + error);
@@ -349,9 +358,9 @@ Likewise, we need a function to handle the event that is triggered when the form
 This will call the `addTicket` function:
 
 ```js
-const addTicket = (e) => {
+  const addTicket = async(e) => {
     e.preventDefault();
-    createTicket();
+    await createTicket();
     fetchTickets();
     setName("");
     setProblem("");
@@ -366,10 +375,10 @@ You will see the rest of the code uses one of these concepts.
 
 ### Connecting the back end to the front end
 
-By default, the React app runs on port `3000`. Our server runs on port `3030`. You will be tempted to put the full URL into your API requests, like this:
+By default, the React app runs on port `8080`. Our server runs on port `3000`. You will be tempted to put the full URL into your API requests, like this:
 
 ```js
-const response = await axios.get("http://localhost:3030/api/tickets");
+const response = await axios.get("http://localhost:3000/api/tickets");
 ```
 
 You don't want to do this! This hard-codes a particular hostname (localhost) and port (3030) into your app. It will break when you deploy it on a server.
@@ -380,12 +389,12 @@ Instead, notice how our code does this:
 const response = await axios.get("/api/tickets");
 ```
 
-We leave off the hostname and the port number. By default, this means it goes to the same host and port where the front end is running. While developing the code, this is `localhost:3000`. When running the code, it might be `yourserver.com` at port 443 (because we are using a secure server).
+We leave off the hostname and the port number. By default, this means it goes to the same host and port where the front end is running. While developing the code, this is `yourserverurl:3000`. When running the code, it might be `yourserverulr` at port 443 (because we are using a secure server).
 
 For this to work during development, we have the following line in `package.json`:
 
 ```js
-  "proxy": "http://localhost:3030",
+  "proxy": "http://localhost:3000",
 ```
 
 This tells the front end to act as a `proxy` for the back end, sending any request that it doesn't handle (such as for `/api/tickets`) to the listed hostname and port: `localhost:3030`.
