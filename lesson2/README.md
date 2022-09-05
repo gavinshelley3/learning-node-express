@@ -127,7 +127,7 @@ Run the server:
 node tickets.js
 ```
 
-Then you can test it with curl.  First create a entry by calling your POST API.
+Then you can test it with curl from another terminal window.  First create a entry by calling your POST API.
 
 ```sh
 $ curl -d '{"name":"Daniel","problem":"Nothing works! This software is junk!"}' -H "Content-Type: application/json" -X POST localhost:3000/api/tickets
