@@ -160,29 +160,118 @@ You should see the following response
 ```sh
 [{"id":1,"name":"Daniel","problem":"Nothing works! This software is junk!"},{"id":2,"name":"Daniel","problem":"Never mind, this system is cool. It was a feature, not a bug!"}]
 ```
+Congratulations!  Your back end is working!  Now press ^C to stop it while we build the front end.  If you dont, some students have seen a message indicating that they have run out of memory on their Cloud9 instance.
 
 ## React front end
-
-Create a directory `lesson2/front-end`:
-
+Change directory to lesson2 in a new terminal window
 ```sh
-cd lesson2
-mkdir front-end
-cd front-end
+cd ~/environment/public_html/node/lesson2
 ```
-Download and unzip [front-end.zip](./front-end.zip) in this directory on Cloud9 with the following command:
+Create a new React project
 ```
-wget https://github.com/BYU-CS-260/learning-node-express/raw/master/lesson2/front-end.zip
-unip front-end.zip
+npx create-react-app front-end
 ```
 Now go into this directory and run:
 
 ```sh
+cd front-end
 npm install
+npm install axios
 ```
+This will install all of the dependencies this code needs. 
 
-This will install all of the dependencies this code needs. You can run this front end with:
+Now insert the code to call the back end into src/App.js
+```
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import './App.css';
 
+function App() {
+  // setup state
+  const [tickets, setTickets] = useState([]);
+  const [error, setError] = useState("");
+  const [name, setName] = useState("");
+  const [problem, setProblem] = useState("");
+
+  const fetchTickets = async() => {
+    try {      
+      const response = await axios.get("/api/tickets");
+      setTickets(response.data);
+    } catch(error) {
+      setError("error retrieving tickets: " + error);
+    }
+  }
+  const createTicket = async() => {
+    try {
+      await axios.post("/api/tickets", {name: name, problem: problem});
+    } catch(error) {
+      setError("error adding a ticket: " + error);
+    }
+  }
+  const deleteOneTicket = async(ticket) => {
+    try {
+    await axios.delete("api/tickets/" + ticket.id);
+    } catch(error) {
+      setError("error deleting a ticket" + error);
+    }
+  }
+
+  // fetch ticket data
+  useEffect(() => {
+    fetchTickets();
+  },[]);
+
+  const addTicket = (e) => {
+    e.preventDefault();
+    createTicket();
+    fetchTickets();
+    setName("");
+    setProblem("");
+  }
+
+  const deleteTicket = (ticket) => {
+    deleteOneTicket(ticket);
+    fetchTickets();
+  }
+
+  // render results
+  return (
+    <div className="App">
+      {error}
+      <h1>Create a Ticket</h1>
+      <form onSubmit={addTicket}>
+        <div>
+          <label>
+            Name:
+            <input type="text" value={name} onChange={e => setName(e.target.value)} />
+          </label>
+        </div>
+        <div>
+          <label>
+            Problem:
+            <textarea value={problem} onChange={e=>setProblem(e.target.value)}></textarea>
+          </label>
+        </div>
+        <input type="submit" value="Submit" />
+      </form>
+      <h1>Tickets</h1>
+      {tickets.map( ticket => (
+        <div key={ticket.id} className="ticket">
+          <div className="problem">
+            <p>{ticket.problem}</p>
+            <p><i>-- {ticket.name}</i></p>
+          </div>
+          <button onClick={e => deleteTicket(ticket)}>Delete</button>
+        </div>
+      ))}     
+    </div>
+  );
+}
+
+export default App;
+
+```
+You can run this front end with:
 ```sh
 npm start
 ```
