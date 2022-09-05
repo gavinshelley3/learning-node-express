@@ -4,7 +4,7 @@ Let's build a help ticket server. We have provided a React front end for you, bu
 
 ## Back end
 
-The first step is to initialize a new project. You do
+1. The first step is to initialize a new project. You do
 this with `npm init`.
 
 ```sh
@@ -29,13 +29,13 @@ author:
 license: (ISC)
 ```
 
-Now we need to install Express and an npm library for parsing the body of POST requests.
+2. Now we need to install Express and an npm library for parsing the body of POST requests.
 
 ```sh
 npm install express body-parser
 ```
 
-Next, create a file called `tickets.js` with the following code:
+3. Next, create a file called `tickets.js` with the following code:
 
 ```js
 const express = require('express');
@@ -59,14 +59,14 @@ app.use(express.static('public'));
 ```
 
 This tells Express that it should serve any files in the `public` directory as if they were just
-static files on a web server. We'll put our React code here later on.
+static files on a web server. 
 
 ```js
 let tickets = [];
 let id = 0;
 ```
 
-Since we don't have a database setup yet, we're just going to store our tickets in a global variable.
+6. Since we don't have a database setup yet, we're just going to store our tickets in a global variable.
 
 ```js
 app.get('/api/tickets', (req, res) => {
@@ -77,6 +77,8 @@ app.get('/api/tickets', (req, res) => {
 
 This is the REST endpoint for getting all the tickets in the system. We just send our list,
 which by default comes with a 200 OK response.
+
+7. Now create a POST route to create tickets
 
 ```js
 app.post('/api/tickets', (req, res) => {
@@ -92,10 +94,12 @@ app.post('/api/tickets', (req, res) => {
 });
 ```
 
-This is the REST endpoint for creating a new ticket. We get the parameters from the request body,
+We get the parameters from the request body,
 create a new ticket, then send back the same ticket we created in a 200 OK response. We've left out
 some error checking---we should check whether the request body includes the desired information.  
 Lets add a console.log so we can see what it happening.
+
+8. Now create a DELETE route to remove tickets when they have been completed
 
 ```js
 app.delete('/api/tickets/:id', (req, res) => {
@@ -115,17 +119,18 @@ app.delete('/api/tickets/:id', (req, res) => {
 });
 ```
 
-This is the REST endpoint for deleting a ticket. The ID is passed in the URL so we use a different
+The ID is passed in the URL so we use a different
 method to parse it. We check whether this ID is present and return a 404 error if it doesn't.
 Otherwise, we remove it and return 200 OK.
 
+9. Finally, start the server
 ```js
 app.listen(3000, () => console.log('Server listening on port 3000!'));
 ```
 
 This starts the server on port 3000.
 
-## Testing with curl
+10. ## Testing with curl
 
 Run the server:
 
@@ -185,6 +190,20 @@ npm install
 npm install axios
 ```
 This will install all of the dependencies this code needs. 
+Insert a proxy line in the "package.json" file so that requests to port 8080 to the "/api/tickets" route will be forwarded to port 3000.
+```
+{
+  "name": "front-end",
+  "version": "0.1.0",
+  "private": true,
+  "proxy": "http://localhost:3000",
+```
+You will also need to create a file ".env.development.local" with the following content
+```
+DANGEROUSLY_DISABLE_HOST_CHECK=true
+```
+The development web server will normally not serve files to a browser from another host, but we want it to so you can develop on Cloud9.
+This ".env" file will make things work.  If you dont have this file, you will get the error "Invalid Host header" when you access your React development server.
 
 Now insert the code to call the back end into src/App.js
 ```
@@ -369,7 +388,6 @@ This will call the `addTicket` function:
 
 We first use `e.preventDefault()` so that the page is not reloaded (the standard browser behavior when submitting a form). We then create the ticket, fetch all tickets (which should include the new one), and reset the `name` and `problem` state variables. Calling `fetchTickets` will result in a change to the `tickets` state variable. Changing all three state variables will cause the page to be rendered again, showing the changes.
 
-<!--
 ### The rest of the code
 
 You will see the rest of the code uses one of these concepts.
@@ -379,10 +397,10 @@ You will see the rest of the code uses one of these concepts.
 By default, the React app runs on port `8080`. Our server runs on port `3000`. You will be tempted to put the full URL into your API requests, like this:
 
 ```js
-const response = await axios.get("http://localhost:3000/api/tickets");
+const response = await axios.get("http://yourserverurl:3000/api/tickets");
 ```
 
-You don't want to do this! This hard-codes a particular hostname (localhost) and port (3030) into your app. It will break when you deploy it on a server.
+You don't want to do this! This hard-codes a particular hostname (localhost) and port (3030) into your app. It will break when you deploy it.
 
 Instead, notice how our code does this:
 
@@ -390,7 +408,7 @@ Instead, notice how our code does this:
 const response = await axios.get("/api/tickets");
 ```
 
-We leave off the hostname and the port number. By default, this means it goes to the same host and port where the front end is running. While developing the code, this is `yourserverurl:3000`. When running the code, it might be `yourserverulr` at port 443 (because we are using a secure server).
+We leave off the hostname and the port number. By default, this means it goes to the same host and port where the front end is running. While developing the code, this is `yourserverurl:8080`. When running the code, it might be `yourserverulr` at port 443 (because we are using a secure server).
 
 For this to work during development, we have the following line in `package.json`:
 
@@ -398,7 +416,7 @@ For this to work during development, we have the following line in `package.json
   "proxy": "http://localhost:3000",
 ```
 
-This tells the front end to act as a `proxy` for the back end, sending any request that it doesn't handle (such as for `/api/tickets`) to the listed hostname and port: `localhost:3030`.
+This tells the front end to act as a `proxy` for the back end, sending any request that it doesn't handle (such as for `/api/tickets`) to the listed hostname and port: `localhost:3000`.
 
 When we deploy a React + Node app on a server, we will likewise setup your web server (nginx or Caddy) so that it can reverse proxy API requests to the Node server.
 -->
