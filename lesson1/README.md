@@ -200,4 +200,4 @@ POST /art - Creates a new art piece
 PUT /art/12 - Updates art piece #12
 DELETE /art/12 - Deletes art piece #12
 ```
-[Next Lesson](lesson2/Readme.md)
+[Next Lesson](https://github.com/BYU-CS-260/learning-node-express/blob/master/lesson2/README.md)
