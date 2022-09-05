@@ -64,6 +64,7 @@ Since we don't have a database setup yet, we're just going to store our tickets 
 
 ```js
 app.get('/api/tickets', (req, res) => {
+  console.log("In get");
   res.send(tickets);
 });
 ```
@@ -73,6 +74,7 @@ which by default comes with a 200 OK response.
 
 ```js
 app.post('/api/tickets', (req, res) => {
+  console.log("In post");
   id = id + 1;
   let ticket = {
     id: id,
@@ -86,10 +88,12 @@ app.post('/api/tickets', (req, res) => {
 
 This is the REST endpoint for creating a new ticket. We get the parameters from the request body,
 create a new ticket, then send back the same ticket we created in a 200 OK response. We've left out
-some error checking---we should check whether the request body includes the desired information.
+some error checking---we should check whether the request body includes the desired information.  
+Lets add a console.log so we can see what it happening.
 
 ```js
 app.delete('/api/tickets/:id', (req, res) => {
+  console.log("In delete");
   let id = parseInt(req.params.id);
   let removeIndex = tickets.map(ticket => {
       return ticket.id;
