@@ -127,19 +127,37 @@ Run the server:
 node tickets.js
 ```
 
-Then you can test it with curl:
+Then you can test it with curl.  First create a entry by calling your POST API.
 
 ```sh
 $ curl -d '{"name":"Daniel","problem":"Nothing works! This software is junk!"}' -H "Content-Type: application/json" -X POST localhost:3000/api/tickets
+```
+You should see the following response
+```sh
 {"id":1,"name":"Daniel","problem":"Nothing works! This software is junk!"}
-
+```
+Next call the GET API to see if it worked
+```
 $ curl localhost:3000/api/tickets
+```
+You should see the following response
+```sh
 [{"id":1,"name":"Daniel","problem":"Nothing works! This software is junk!"}]
-
+```
+Add another ticket with POST
+```sh
 $ curl -d '{"name":"Daniel","problem":"Never mind, this system is cool. It was a feature, not a bug!"}' -H "Content-Type: application/json" -X POST localhost:3000/api/tickets
+```
+You should see the following response
+```sh
 {"id":2,"name":"Daniel","problem":"Never mind, this system is cool. It was a feature, not a bug!"}
-
+```
+Now use GET to see both tickets
+```sh
 $ curl localhost:3000/api/tickets
+```
+You should see the following response
+```sh
 [{"id":1,"name":"Daniel","problem":"Nothing works! This software is junk!"},{"id":2,"name":"Daniel","problem":"Never mind, this system is cool. It was a feature, not a bug!"}]
 ```
 
