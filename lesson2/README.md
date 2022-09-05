@@ -61,12 +61,14 @@ app.use(express.static('public'));
 This tells Express that it should serve any files in the `public` directory as if they were just
 static files on a web server. 
 
+4. Since we don't have a database setup yet, we're just going to store our tickets in a global variable.
+
 ```js
 let tickets = [];
 let id = 0;
 ```
 
-4. Since we don't have a database setup yet, we're just going to store our tickets in a global variable.
+5. Now create the GET route 
 
 ```js
 app.get('/api/tickets', (req, res) => {
@@ -78,7 +80,7 @@ app.get('/api/tickets', (req, res) => {
 This is the REST endpoint for getting all the tickets in the system. We just send our list,
 which by default comes with a 200 OK response.
 
-5. Now create a POST route to create tickets
+6. Now create a POST route to create tickets
 
 ```js
 app.post('/api/tickets', (req, res) => {
@@ -99,7 +101,7 @@ create a new ticket, then send back the same ticket we created in a 200 OK respo
 some error checking---we should check whether the request body includes the desired information.  
 Lets add a console.log so we can see what it happening.
 
-6. Now create a DELETE route to remove tickets when they have been completed
+7. Now create a DELETE route to remove tickets when they have been completed
 
 ```js
 app.delete('/api/tickets/:id', (req, res) => {
@@ -123,14 +125,12 @@ The ID is passed in the URL so we use a different
 method to parse it. We check whether this ID is present and return a 404 error if it doesn't.
 Otherwise, we remove it and return 200 OK.
 
-7. Finally, start the server
+8. Finally, start the server on port 3000
 ```js
 app.listen(3000, () => console.log('Server listening on port 3000!'));
 ```
 
-This starts the server on port 3000.
-
-8. ## Testing with curl
+9. ## Testing with curl
 
 Run the server:
 
@@ -174,15 +174,17 @@ You should see the following response
 Congratulations!  Your back end is working!  Now press ^C to stop it while we build the front end.  If you dont, some students have seen a message indicating that they have run out of memory on their Cloud9 instance.
 
 ## React front end
-Change directory to lesson2 in a new terminal window
+1. Change directory to lesson2 in a new terminal window
 ```sh
 cd ~/environment/public_html/node/lesson2
 ```
-Create a new React project
+
+2. Create a new React project
 ```
 npx create-react-app front-end
 ```
-Now go into this directory and run:
+
+3. Now go into this directory and run:
 
 ```sh
 cd front-end
@@ -190,7 +192,8 @@ npm install
 npm install axios
 ```
 This will install all of the dependencies this code needs. 
-Insert a proxy line in the "package.json" file so that requests to port 8080 to the "/api/tickets" route will be forwarded to port 3000.
+
+4. Insert a proxy line in the "package.json" file so that requests to port 8080 to the "/api/tickets" route will be forwarded to port 3000.
 ```
 {
   "name": "front-end",
@@ -198,14 +201,15 @@ Insert a proxy line in the "package.json" file so that requests to port 8080 to 
   "private": true,
   "proxy": "http://localhost:3000",
 ```
-You will also need to create a file ".env.development.local" with the following content
+
+5. You will also need to create a file ".env.development.local" with the following content
 ```
 DANGEROUSLY_DISABLE_HOST_CHECK=true
 ```
 The development web server will normally not serve files to a browser from another host, but we want it to so you can develop on Cloud9.
 This ".env" file will make things work.  If you dont have this file, you will get the error "Invalid Host header" when you access your React development server.
 
-Now insert the code to call the back end into src/App.js
+6. Now insert the code to call the back end into src/App.js
 ```
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -217,11 +221,10 @@ function App() {
   const [error, setError] = useState("");
   const [name, setName] = useState("");
   const [problem, setProblem] = useState("");
-  var myhostname = "http://YourEC2URL:3000";
 
   const fetchTickets = async() => {
     try {      
-      const response = await axios.get(myhostname+"/api/tickets");
+      const response = await axios.get("/api/tickets");
       setTickets(response.data);
     } catch(error) {
       setError("error retrieving tickets: " + error);
@@ -229,16 +232,14 @@ function App() {
   }
   const createTicket = async() => {
     try {
-      await axios.post(myhostname+"/api/tickets", {name: name, problem: problem});
-      fetchTickets();
+      await axios.post("/api/tickets", {name: name, problem: problem});
     } catch(error) {
       setError("error adding a ticket: " + error);
     }
   }
   const deleteOneTicket = async(ticket) => {
     try {
-      await axios.delete(myhostname+"/api/tickets/" + ticket.id);
-      fetchTickets();
+      await axios.delete("/api/tickets/" + ticket.id);
     } catch(error) {
       setError("error deleting a ticket" + error);
     }
@@ -299,12 +300,13 @@ function App() {
 export default App;
 
 ```
-Change the variable "myhostname" to your host URL. You can run this front end with:
+
+7. Now start the front end server
 ```sh
 npm start
 ```
 
-You now have a React front end for a ticket service. This could was created using `create-react-app`. Most of the relevant code is in `src/App.js`.
+You now have a React front end for a ticket service. 
 
 ### State hooks
 
