@@ -148,7 +148,12 @@ cd lesson2
 mkdir front-end
 ```
 
-Download and unzip [front-end.zip](./front-end.zip) in this directory. Now go into this directory and run:
+Download and unzip [front-end.zip](./front-end.zip) in this directory on Cloud9 with the following command:
+```
+wget https://github.com/BYU-CS-260/learning-node-express/blob/master/lesson2/front-end.zip
+unzip front-end.zip
+```
+Now go into this directory and run:
 
 ```sh
 npm install
