@@ -200,3 +200,4 @@ POST /art - Creates a new art piece
 PUT /art/12 - Updates art piece #12
 DELETE /art/12 - Deletes art piece #12
 ```
+[Next Lesson](lesson2)
