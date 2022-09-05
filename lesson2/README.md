@@ -1,6 +1,6 @@
 # Lesson 2: A help ticket server
 
-Let's build a help ticket server. We have provided a React front end for you.
+Let's build a help ticket server. We have provided a React front end for you, but you should understand what is happening in the front end so you can write your own in following assignments.
 
 ## Back end
 
