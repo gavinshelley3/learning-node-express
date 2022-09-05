@@ -369,6 +369,7 @@ This will call the `addTicket` function:
 
 We first use `e.preventDefault()` so that the page is not reloaded (the standard browser behavior when submitting a form). We then create the ticket, fetch all tickets (which should include the new one), and reset the `name` and `problem` state variables. Calling `fetchTickets` will result in a change to the `tickets` state variable. Changing all three state variables will cause the page to be rendered again, showing the changes.
 
+<!--
 ### The rest of the code
 
 You will see the rest of the code uses one of these concepts.
@@ -400,4 +401,4 @@ For this to work during development, we have the following line in `package.json
 This tells the front end to act as a `proxy` for the back end, sending any request that it doesn't handle (such as for `/api/tickets`) to the listed hostname and port: `localhost:3030`.
 
 When we deploy a React + Node app on a server, we will likewise setup your web server (nginx or Caddy) so that it can reverse proxy API requests to the Node server.
-
+-->
