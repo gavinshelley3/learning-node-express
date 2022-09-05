@@ -396,7 +396,7 @@ You will see the rest of the code uses one of these concepts.
 
 ### Connecting the back end to the front end
 
-By default, the React app runs on port `8080`. Our server runs on port `3000`. You will be tempted to put the full URL into your API requests, like this:
+By default, the React app runs on port `8080`. Your back end server runs on port `3000`. You will be tempted to put the full URL into your API requests, like this:
 
 ```js
 const response = await axios.get("http://yourserverurl:3000/api/tickets");
@@ -421,4 +421,4 @@ For this to work during development, we have the following line in `package.json
 This tells the front end to act as a `proxy` for the back end, sending any request that it doesn't handle (such as for `/api/tickets`) to the listed hostname and port: `localhost:3000`.
 
 When we deploy a React + Node app on a server, we will likewise setup your web server (nginx or Caddy) so that it can reverse proxy API requests to the Node server.
--->
+
