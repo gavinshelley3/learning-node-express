@@ -66,7 +66,7 @@ let tickets = [];
 let id = 0;
 ```
 
-6. Since we don't have a database setup yet, we're just going to store our tickets in a global variable.
+4. Since we don't have a database setup yet, we're just going to store our tickets in a global variable.
 
 ```js
 app.get('/api/tickets', (req, res) => {
@@ -78,7 +78,7 @@ app.get('/api/tickets', (req, res) => {
 This is the REST endpoint for getting all the tickets in the system. We just send our list,
 which by default comes with a 200 OK response.
 
-7. Now create a POST route to create tickets
+5. Now create a POST route to create tickets
 
 ```js
 app.post('/api/tickets', (req, res) => {
@@ -99,7 +99,7 @@ create a new ticket, then send back the same ticket we created in a 200 OK respo
 some error checking---we should check whether the request body includes the desired information.  
 Lets add a console.log so we can see what it happening.
 
-8. Now create a DELETE route to remove tickets when they have been completed
+6. Now create a DELETE route to remove tickets when they have been completed
 
 ```js
 app.delete('/api/tickets/:id', (req, res) => {
@@ -123,14 +123,14 @@ The ID is passed in the URL so we use a different
 method to parse it. We check whether this ID is present and return a 404 error if it doesn't.
 Otherwise, we remove it and return 200 OK.
 
-9. Finally, start the server
+7. Finally, start the server
 ```js
 app.listen(3000, () => console.log('Server listening on port 3000!'));
 ```
 
 This starts the server on port 3000.
 
-10. ## Testing with curl
+8. ## Testing with curl
 
 Run the server:
 
