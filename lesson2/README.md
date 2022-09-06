@@ -130,9 +130,9 @@ Otherwise, we remove it and return 200 OK.
 app.listen(3000, () => console.log('Server listening on port 3000!'));
 ```
 
-9. ## Testing with curl
+## Testing with curl
 
-Run the server:
+9. Run the server:
 
 ```sh
 node tickets.js
