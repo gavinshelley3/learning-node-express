@@ -6,4 +6,4 @@ This is a set of lessons that will walk you through learning [Node.js](https://n
 
 * [Lesson 1](/lesson1/README.md): A Hello World for Node.js
 
-* [Lesson 2](/lesson2/README.md): A help ticket server (using Node.js, Express) and front end (using Vue CLI)
+* [Lesson 2](/lesson2/README.md): A help ticket server (using Node.js, Express) and front end (using React CLI)
