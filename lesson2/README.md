@@ -1,6 +1,6 @@
 # Lesson 2: A help ticket server
 
-Let's build a help ticket server. We have provided a React front end for you, but you should understand what is happening in the front end so you can write your own in following assignments.
+Let's build a TODO list server. We have provided a React front end for you, but you should understand what is happening in the front end so you can write your own in following assignments.
 
 ## Back end
 
@@ -20,7 +20,7 @@ Like the first lesson, we'll answer these questions:
 ```sh
 package name: (lesson2)
 version: (1.0.0)
-description: help ticket server
+description: TODO List
 entry point: (index.js)
 test command:
 git repository:
@@ -35,7 +35,7 @@ license: (ISC)
 npm install express body-parser
 ```
 
-3. Next, create a file called `tickets.js` with the following code:
+3. Next, create a file called `todo.js` with the following code:
 
 ```js
 const express = require('express');
