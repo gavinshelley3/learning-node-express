@@ -63,12 +63,12 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-app.listen(3000, () => console.log('Server listening on port 3000!'));
+app.listen(8080, () => console.log('Server listening on port 8080!'));
 ```
 
 When you run `node server.js`, your server will run and listen on port
-3000. You can visit it in a browser at `<YourAWShost>:3000`.  
-You can also test to see if your API is working by opening another terminal and entering ```curl localhost:3000```
+8080. You can visit it in a browser at `<YourAWShost>:8080`.  
+You can also test to see if your API is working by opening another terminal and entering ```curl localhost:8080```
 
 
 In this example, we are using `require` to include the Express
@@ -141,10 +141,10 @@ in the database.
 You can access these URLs using curl:
 
 ```
-curl -X GET localhost:3000/
-curl -X POST localhost:3000/
-curl -X PUT localhost:3000/
-curl -X DELETE localhost:3000/
+curl -X GET localhost:8080/
+curl -X POST localhost:8080/
+curl -X PUT localhost:8080/
+curl -X DELETE localhost:8080/
 ```
 
 ## Naming your resources
@@ -168,8 +168,8 @@ app.get('/api/user/1', (req, res) => {
 Test with:
 
 ```
-curl -X GET localhost:3000/secret
-curl -X GET localhost:3000/api/user/1
+curl -X GET localhost:8080/secret
+curl -X GET localhost:8080/api/user/1
 ```
 
 Notice that we can return JSON responses.
