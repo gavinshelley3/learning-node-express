@@ -141,7 +141,7 @@ node tickets.js
 Then you can test it with curl from another terminal window.  First create a entry by calling your POST API.
 
 ```sh
-$ curl -d '{"name":"Daniel","problem":"Nothing works! This software is junk!"}' -H "Content-Type: application/json" -X POST localhost:3000/api/tickets
+curl -d '{"name":"Daniel","problem":"Nothing works! This software is junk!"}' -H "Content-Type: application/json" -X POST localhost:3000/api/tickets
 ```
 You should see the following response
 ```sh
@@ -149,7 +149,7 @@ You should see the following response
 ```
 Next call the GET API to see if it worked
 ```
-$ curl localhost:3000/api/tickets
+curl localhost:3000/api/tickets
 ```
 You should see the following response
 ```sh
@@ -157,7 +157,7 @@ You should see the following response
 ```
 Add another ticket with POST
 ```sh
-$ curl -d '{"name":"Daniel","problem":"Never mind, this system is cool. It was a feature, not a bug!"}' -H "Content-Type: application/json" -X POST localhost:3000/api/tickets
+curl -d '{"name":"Daniel","problem":"Never mind, this system is cool. It was a feature, not a bug!"}' -H "Content-Type: application/json" -X POST localhost:3000/api/tickets
 ```
 You should see the following response
 ```sh
@@ -165,7 +165,7 @@ You should see the following response
 ```
 Now use GET to see both tickets
 ```sh
-$ curl localhost:3000/api/tickets
+curl localhost:3000/api/tickets
 ```
 You should see the following response
 ```sh
