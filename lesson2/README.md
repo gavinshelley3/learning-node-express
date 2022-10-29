@@ -423,15 +423,32 @@ This tells the front end to act as a `proxy` for the back end, sending any reque
 When we deploy a React + Node app on a server, we will likewise setup your web server (nginx or Caddy) so that it can reverse proxy API requests to the Node server.
 
 ### Deploying your application
-Once you have everything working, you can deploy your application by going to the front end directory and using
+Once you have your code working, you will want to deploy it to Caddy so it can be served even after you have stopped your ```npm start``.
+
+Change your "package.json" file to allow your application to be served from any subdirectory in your domain.  
+Add the following line to the top of your "package.json" file
+```
+  "homepage": ".",
+```
+So, the top 5 lines of your package.json file should be:
+```
+{
+  "name": "my-app",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": ".",
+  "proxy": "http://localhost:3000",
+```
+Now deploy your application with the command
 ```
 npm run build
 ```
+This should create a "build" directory with all of the files needed to run your application.  Notice that there is an "index.html" file in this directory that is a compressed version of your application.  If you have created ```lesson2/front-end``` in your "public_html/node" directory, then you can access your React CLI application by going to ```https://mydomain/node/lesson2/front-end/build/```
+
 And you can run your back end using 
 ```
 node server.js
 ```
-Then copy your ```build``` directory into a place where caddy will serve it.
 
 Now you just need to get caddy to do the proxy work.  You can modify your ```/etc/caddy/Caddyfile``` to add a reverse proxy section like this:
 ```
