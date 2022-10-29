@@ -440,7 +440,7 @@ Yourserver.compute.amazonaws.com {
         root * /usr/share/caddy
 
         # Another common task is to set up a reverse proxy:
-        handle_path /api {
+        handle /api/* {
                 reverse_proxy localhost:3000
         }
 
