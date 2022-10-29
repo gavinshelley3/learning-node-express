@@ -422,3 +422,33 @@ This tells the front end to act as a `proxy` for the back end, sending any reque
 
 When we deploy a React + Node app on a server, we will likewise setup your web server (nginx or Caddy) so that it can reverse proxy API requests to the Node server.
 
+### Deploying your application
+Once you have everything working, you can deploy your application by going to the front end directory and using
+```
+npm run build
+```
+And you can run your back end using 
+```
+node server.js
+```
+Then copy your ```build``` directory into a place where caddy will serve it.
+
+Now you just need to get caddy to do the proxy work.  You can modify your ```/etc/caddy/Caddyfile``` to add a reverse proxy section like this:
+```
+Yourserver.compute.amazonaws.com {
+        # Set this path to your site's directory.
+        root * /usr/share/caddy
+
+        # Another common task is to set up a reverse proxy:
+        handle_path /api {
+                reverse_proxy localhost:3000
+        }
+
+        # Enable the static file server.
+
+        file_server
+        # Or serve a PHP site through php-fpm:
+        # php_fastcgi localhost:9000
+}
+```
+Caddy will then forward any requests to the path "/api" to port 3000.
