@@ -451,7 +451,7 @@ node server.js
 ```
 
 Now you just need to get caddy to do the proxy work.  You can modify your ```/etc/caddy/Caddyfile``` to add a reverse proxy section like this:
-```
+```php
 Yourserver.compute.amazonaws.com {
         # Set this path to your site's directory.
         root * /usr/share/caddy
