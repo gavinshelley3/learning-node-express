@@ -207,10 +207,10 @@ This will install all of the dependencies this code needs.
 DANGEROUSLY_DISABLE_HOST_CHECK=true
 ```
 The development web server will normally not serve files to a browser from another host, but we want it to so you can develop on Cloud9.
-This ".env" file will make things work.  If you dont have this file, you will get the error "Invalid Host header" when you access your React development server.
+This ".env" file will make things work.  If you don't have this file, you will get the error "Invalid Host header" when you access your React development server.
 
 6. Now insert the code to call the back end into src/App.js
-```
+```jsx
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
