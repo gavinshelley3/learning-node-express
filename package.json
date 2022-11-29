@@ -1,0 +1,23 @@
+{
+  "name": "learning-node-express",
+  "version": "1.0.0",
+  "description": "This is a set of lessons that will walk you through learning [Node.js](https://nodejs.org/en/) and [Express](https://expressjs.com/).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gavinshelley3/learning-node-express.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gavinshelley3/learning-node-express/issues"
+  },
+  "homepage": "https://github.com/gavinshelley3/learning-node-express#readme",
+  "dependencies": {
+    "body-parser": "^1.20.1",
+    "express": "^4.18.2"
+  }
+}
